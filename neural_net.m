@@ -60,9 +60,7 @@ function [DPHIw] = call_grad_fun(x,w,phi,xtrnorm,N, data, no_var,ytrnorm,sigma)
  end  
  DPHIw = vec(DPHIw');
 end
-
-
-    
+  
 %p-nearest neighbor
 function [sigma] = Pnn(N,c)
 sigma(1,N) = 0;
