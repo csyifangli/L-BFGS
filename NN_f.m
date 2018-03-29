@@ -42,7 +42,3 @@ finalc = out_lbfgs.x;
 
 %N x no_var
 finalc = vec2mat(finalc,no_var);
-
-% [phi,w] = call_phi_fun(finalc,xtrnorm,N, data, no_var,ytrnorm);
-% 
-% h = 0.5*norm(phi*w-ytrnorm)^2
