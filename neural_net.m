@@ -23,9 +23,9 @@ end
 function [DPHIw] = call_grad_fun(x,w,phi,xtrnorm,N, data, no_var,ytrnorm,sigma)
  DPHIw(1:N,1:no_var) = 0;
  for cent = 1:N
-                        d = abs(xtrnorm-repmat(x(cent,:),data,1));
+                      %  d = abs(xtrnorm-repmat(x(cent,:),data,1));
                         diff = repmat(x(cent,:),data,1) - xtrnorm;
-                        dphidc_ =  (2*(-1/(2*sigma(1,cent)^2))*exp((-d.^2)/(2*sigma(1,cent)^2)).*diff);
+                        dphidc_ =  (2*(-1/(2*sigma(1,cent)^2))*exp((-abs(diff).^2)/(2*sigma(1,cent)^2)).*diff);
                         DPHIw(cent,:) = -w(cent,1)*(ytrnorm-phi*w)'*dphidc_;        
  end  
  DPHIw = vec(DPHIw');
