@@ -20,41 +20,7 @@ function [val, grad] = call_neural_net_f(x, xtrnorm,ytrnorm,N,data,no_var)
    grad = DPHIw;
 end
 
-function [DPHIw] = call_grad_fun(x,w,phi,xtrnorm,N, data, no_var,ytrnorm,sigma)
- DPHIw(1:N,1:no_var) = 0;
- for cent = 1:N
-                      %  d = abs(xtrnorm-repmat(x(cent,:),data,1));
-                        diff = repmat(x(cent,:),data,1) - xtrnorm;
-                        dphidc_ =  (2*(-1/(2*sigma(1,cent)^2))*exp((-abs(diff).^2)/(2*sigma(1,cent)^2)).*diff);
-                        DPHIw(cent,:) = -w(cent,1)*(ytrnorm-phi*w)'*dphidc_;        
- end  
- DPHIw = vec(DPHIw');
-end
-    
-%p-nearest neighbor
-function [sigma] = Pnn(N,c)
-sigma(1,N) = 0;
- for i = 1:N
-    cne=repmat(c(i,:),N,1);   
-    dist(1,1:N) = 0;
-    for j = 1:N
-            dist(j) = norm(cne(j,:)-c(j,:));
-    end
-
-    distsort=sort(dist);
-
-    %% P=2
-    min1 = distsort(1,2); % distsort(1,1) = 0
-    min2 = distsort(1,3);
-
-    sigma(i) = sqrt((1/2)*(min1^2+min2^2));
-
-    %% P = N-1
-     % sigma(1,i) = sqrt((1/(N-1))*(sum(distsort(1,1:N-1).^2))); 
- end
-
-end
-
+%gaussian
 function [phi,w] = call_phi_fun(cnorm,xnorm,N, data, no_var,ytrnorm,sigma)
     phi(1:data,1:N+1) = 0;
     x=repmat(xnorm,1,N);
@@ -84,5 +50,39 @@ function [phi,w] = call_phi_fun(cnorm,xnorm,N, data, no_var,ytrnorm,sigma)
        w = phi\ytrnorm;
 end
 
+function [DPHIw] = call_grad_fun(x,w,phi,xtrnorm,N, data, no_var,ytrnorm,sigma)
+ DPHIw(1:N,1:no_var) = 0;
+ for cent = 1:N
+                      %  d = abs(xtrnorm-repmat(x(cent,:),data,1));
+                        diff = repmat(x(cent,:),data,1) - xtrnorm;
+                        dphidc_ =  (2*(-1/(2*sigma(1,cent)^2))*exp((-abs(diff).^2)/(2*sigma(1,cent)^2)).*diff);
+                        DPHIw(cent,:) = -w(cent,1)*(ytrnorm-phi*w)'*dphidc_;        
+ end  
+ DPHIw = vec(DPHIw');
+end
 
-  
+
+    
+%p-nearest neighbor
+function [sigma] = Pnn(N,c)
+sigma(1,N) = 0;
+ for i = 1:N
+    cne=repmat(c(i,:),N,1);   
+    dist(1,1:N) = 0;
+    for j = 1:N
+            dist(j) = norm(cne(j,:)-c(j,:));
+    end
+
+    distsort=sort(dist);
+
+    %% P=2
+    min1 = distsort(1,2); % distsort(1,1) = 0
+    min2 = distsort(1,3);
+
+    sigma(i) = sqrt((1/2)*(min1^2+min2^2));
+
+    %% P = N-1
+     % sigma(1,i) = sqrt((1/(N-1))*(sum(distsort(1,1:N-1).^2))); 
+ end
+
+end
