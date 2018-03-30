@@ -80,7 +80,7 @@ sigma(1,N) = 0;
     sigma(i) = (1/2)*sqrt(min1^2+min2^2);
 
     %% P = N-1
-    %sigma(i) = (1/(N-1))*sqrt(sum(distsort(1,1:N-1).^2)); 
+    %sigma(i) = (1/(N))*sqrt(sum(distsort(1,1:N).^2)); 
  end
 
 end
