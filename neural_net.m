@@ -77,10 +77,10 @@ sigma(1,N) = 0;
     min1 = distsort(1,2); % distsort(1,1) = 0
     min2 = distsort(1,3);
 
-    sigma(i) = sqrt((1/2)*(min1^2+min2^2));
+    sigma(i) = (1/2)*sqrt(min1^2+min2^2);
 
     %% P = N-1
-     % sigma(1,i) = sqrt((1/(N-1))*(sum(distsort(1,1:N-1).^2))); 
+     % sigma(1,i) = (1/(N-1))*sqrt(sum(distsort(1,1:N-1).^2)); 
  end
 
 end
