@@ -10,7 +10,7 @@ DPHIw(1:N,1:N*no_var) = 0;
                         diff = repmat(c(cent,:),data,1) - xtrnorm;
     
                         %Gaussian
-                        dphidc_ =  (2*(-1/(2*sigma(1,cent)^2))*exp((-sum(diff.^2,2))/(2*sigma(1,cent)^2)).*diff);
+                        dphidc_ =  -(2*(-1/(2*sigma(1,cent)^2))*exp((-sum(diff.^2,2))/(2*sigma(1,cent)^2)).*diff);
                        
                         DPHIw(1:data,n_arx:n_tel) = w(cent,1)*dphidc_;
                         n_arx=n_tel+1;

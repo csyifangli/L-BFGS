@@ -9,7 +9,7 @@ DPHIwSIGMA2(1:data,1:N) = 0;
                         diff = repmat(c(cent,:),data,1) - xtrnorm;
     
                         %Gaussian                      
-                        dphidSIGMA_ =  (1/(SIGMA(1,cent)^3))*exp((-sum(diff.^2,2))/(2*SIGMA(1,cent)^2)).*sum(diff.^2,2);
+                        dphidSIGMA_ =  -(1/(SIGMA(1,cent)^3))*exp((-sum(diff.^2,2))/(2*SIGMA(1,cent)^2)).*sum(diff.^2,2);
                        
                         DPHIwSIGMA2(:,cent) = w(cent,1)*dphidSIGMA_;
 
