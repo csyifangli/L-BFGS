@@ -23,7 +23,7 @@ LMitRUNS(runs,1) = 0;
 time(runs,1) = 0;
 rng('default')
 
-Ninit = 149; Nfinal = Ninit;
+Ninit = 480; Nfinal = Ninit;
 
 %RBFs
 N = Ninit;
@@ -94,7 +94,7 @@ tic
                 DPHIwSIGMA = grad_fun_SIGMA2(c,w,phi,xtrnorm,N, data, no_var,ytrnorm,SIGMA);
                 %A = Q2'*DPHIwc;     
                 %B = -Q2'*ytrnorm;     
-                A = -[DPHIwc DPHIwSIGMA];
+                A = [DPHIwc DPHIwSIGMA];
                 B = - (ytrnorm - phi*w);
                 I = eye(size(A'*A,1),size(A'*A,2));
                 lambda = 1;
@@ -172,10 +172,10 @@ tic
                                SIGMAmin = SIGMA;
                             end
                             
-%                             if (minva(1,1)<itRMSEva(kva+1)) 
-%                                %update values @min RMSEva
-%                                break;
-%                             end
+                            if (minva(1,1)<itRMSEva(kva+1)) 
+                               %break @min RMSEva
+                               break;
+                            end
 
                             %metrhths LM epanalipsewn
                             kva = kva+1; 
@@ -186,7 +186,7 @@ tic
                             DPHIwSIGMA = grad_fun_SIGMA2(c,w,phi,xtrnorm,N, data, no_var,ytrnorm,SIGMA);
                             % A = Q2'*DPHIwc;
                             % B = -Q2'*ytrnorm;                                        % A = Q2'*DPHIwc;     
-                            A = -[DPHIwc DPHIwSIGMA];
+                            A = [DPHIwc DPHIwSIGMA];
                             B = - (ytrnorm - phi*w); 
                        end
               end  
